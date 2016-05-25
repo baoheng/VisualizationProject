@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Chart1</h1>
+    <script type="text/javascript">
+        var data = [];
+        data = {{ chart1Info.json|safe }};
+        for(var i = 0; i < data.length; i++){
+            data[i]["click"] = showPieChart;
+        }
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer", {
+                theme: "theme1",
+                title:{
+                    text: "{{chart1Info.chartTitle}}"
+                },
+                data: data
+            });
+            chart.render();
+            $(":button").click(function () {
+                $("#hiddenPieChartContainer").toggle();
+            });
+        }
+        function showPieChart(e){
+            $.ajax({
+                type: "POST",
+                url: "/createPieChart",
+                data: JSON.stringify({"chart1": e.dataPoint}),
+                dataType: "json",
+                success: function(data){
+                    if($("#hiddenPieChartContainer").css("display") == 'none'){
+                        $("#hiddenPieChartContainer").show();
+                    }
+                    var pieChart = new CanvasJS.Chart("pieChartContainer", {
+                        title:{
+                            text: data["title"]
+                        },
+                        legend: {
+                            maxWidth: 350,
+                            itemWidth: 120
+                        },
+                        data: data["data"]
+                    });
+                    pieChart.render();
+                }
+            });
+        }
+    </script>
+    <div id="chartContainer" style="height: 300px; width: 100%; padding-top: 20px"></div>
+    <div id="hiddenPieChartContainer" style="display: none; padding-top: 20px;">
+        <button type="button" class="btn btn-default" aria-label="Left Align">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+        <div id="pieChartContainer" style="height: 300px; width: 100%; padding-top: 20px;"></div>
+    </div>
+{% endblock %}
