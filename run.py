@@ -11,6 +11,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index.html')
 def index():
+    print(getChart1Info())
     return render_template(
         'index.html',
         title='Home Page',
@@ -25,7 +26,7 @@ def chart1():
     return render_template(
         'chart1.html',
         title='Chart 1',
-        chart1Info=chart1Info
+        chart1Info=getChart1Info()
     )
 
 
@@ -128,7 +129,8 @@ def getChart1Info():
                     "label": row[0].value,
                     "y": row[5].value
                 }
-            dataPoints.append(d)
+            if d["label"] != None:
+                dataPoints.append(d)
 
         dict["dataPoints"] = dataPoints
         data.append(dict)
@@ -189,7 +191,8 @@ def getChart2Info():
                     "label": row[0].value,
                     "y": row[5].value
                 }
-            dataPoints.append(d)
+            if d["label"] != None:
+                dataPoints.append(d)
 
         dict["dataPoints"] = dataPoints
         data.append(dict)
