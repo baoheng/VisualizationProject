@@ -306,7 +306,7 @@ def getChart4Info():
         }
 
         dataPoints = []
-        for row in sheet.iter_rows(row_offset=3):
+        for row in sheet.iter_rows(row_offset=2):
             if item == "Debt Service as % of GF-S Revenues":
                 d = {
                     "label": row[0].value,
