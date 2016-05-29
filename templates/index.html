@@ -37,6 +37,8 @@
                             text: data["title"]
                         },
                         legend: {
+                            horizontalAlign: "right",
+                            verticalAlign: "center",
                             maxWidth: 350,
                             itemWidth: 120
                         },
@@ -47,11 +49,11 @@
             });
         }
     </script>
-    <div id="chartContainer" style="height: 300px; width: 100%; padding-top: 20px"></div>
-    <div id="hiddenPieChartContainer" style="display: none; padding-top: 20px;">
+    <div class="collapse" id="hiddenPieChartContainer" style="display: none; padding: 0px 20px;">
         <button type="button" class="btn btn-default" aria-label="Left Align">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
         <div id="pieChartContainer" style="height: 300px; width: 100%; padding-top: 20px;"></div>
     </div>
+    <div id="chartContainer" style="height: 300px; width: 100%; padding-top: 20px"></div>
 {% endblock %}
